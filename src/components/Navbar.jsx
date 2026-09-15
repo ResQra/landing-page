@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react'
 import { LifeBuoy, ArrowUpRight, Activity, Menu, X } from 'lucide-react'
+
+const DEMO_URL = (import.meta.env.VITE_DEMO_URL || 'http://localhost:5174').replace(/\/$/, '')
+const CONSOLE_URL = (import.meta.env.VITE_CONSOLE_URL || 'http://localhost:5173').replace(/\/$/, '')
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -55,24 +57,24 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* Right Action Buttons */}
-        <div className="hidden sm:flex items-center gap-3">
+        {/* Right Action Buttons: See Demo & Launch Console */}
+        <div className="hidden sm:flex items-center gap-2.5">
           <a
-            href="http://localhost:5174"
+            href={DEMO_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-3.5 py-2 rounded-lg text-xs font-semibold text-amber-800 bg-amber-50 border border-amber-200 hover:bg-amber-100 transition-all flex items-center gap-1.5 cursor-pointer font-mono"
+            className="px-3.5 py-2 rounded-lg text-xs font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 transition-all flex items-center gap-1.5 cursor-pointer font-sans"
           >
-            <Activity className="size-3.5 text-amber-600" />
-            <span>Judge Sandbox</span>
+            <Activity className="size-3.5 text-emerald-600" />
+            <span>See Demo</span>
           </a>
           <a
-            href="http://localhost:5173/login"
+            href={CONSOLE_URL.endsWith('/login') || CONSOLE_URL.endsWith('/admin') ? CONSOLE_URL : `${CONSOLE_URL}/login`}
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-2 rounded-lg text-xs font-semibold text-white bg-slate-900 hover:bg-slate-800 shadow-xs transition-all flex items-center gap-1.5 cursor-pointer font-sans"
           >
-            <span>Open Console</span>
+            <span>Launch Console</span>
             <ArrowUpRight className="size-3.5" />
           </a>
         </div>
@@ -104,20 +106,21 @@ export default function Navbar() {
 
           <div className="pt-3 border-t border-slate-200 grid grid-cols-2 gap-2">
             <a
-              href="http://localhost:5174"
+              href={DEMO_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="py-2.5 text-center text-xs font-semibold text-amber-800 bg-amber-50 border border-amber-200 rounded-lg font-mono"
+              className="py-2.5 text-center text-xs font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200 rounded-lg font-sans flex items-center justify-center gap-1"
             >
-              Judge Sandbox
+              <Activity className="size-3 text-emerald-600" />
+              See Demo
             </a>
             <a
-              href="http://localhost:5173/login"
+              href={CONSOLE_URL.endsWith('/login') || CONSOLE_URL.endsWith('/admin') ? CONSOLE_URL : `${CONSOLE_URL}/login`}
               target="_blank"
               rel="noopener noreferrer"
-              className="py-2.5 text-center text-xs font-semibold text-white bg-slate-900 rounded-lg"
+              className="py-2.5 text-center text-xs font-semibold text-white bg-slate-900 rounded-lg font-sans"
             >
-              Open Console
+              Launch Console
             </a>
           </div>
         </div>

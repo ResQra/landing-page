@@ -2,6 +2,17 @@ import React from 'react'
 import { ArrowUpRight, Play, Server, Monitor, Smartphone, Activity } from 'lucide-react'
 import { DEMO_LAUNCHPAD } from '../data/landingData.js'
 
+const DEMO_URL = (import.meta.env.VITE_DEMO_URL || 'http://localhost:5174').replace(/\/$/, '')
+const CONSOLE_URL = (import.meta.env.VITE_CONSOLE_URL || 'http://localhost:5173').replace(/\/$/, '')
+const API_URL = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000').replace(/\/$/, '')
+
+function resolveUrl(item) {
+  if (item.port === '5174') return item.path ? `${DEMO_URL}/${item.path}` : DEMO_URL
+  if (item.port === '5173') return item.path ? `${CONSOLE_URL}/${item.path}` : CONSOLE_URL
+  if (item.port === '8000') return item.path ? `${API_URL}/${item.path}` : API_URL
+  return `http://localhost:${item.port}/${item.path}`
+}
+
 export default function DemoLauncher() {
   const iconList = [Smartphone, Monitor, Activity, Server]
 
@@ -26,7 +37,7 @@ export default function DemoLauncher() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {DEMO_LAUNCHPAD.map((item, idx) => {
             const Icon = iconList[idx] || Monitor
-            const fullUrl = `http://localhost:${item.port}/${item.path}`
+            const fullUrl = resolveUrl(item)
 
             return (
               <div
@@ -58,7 +69,7 @@ export default function DemoLauncher() {
                     <ArrowUpRight className="size-3.5" />
                   </a>
                   <div className="text-[10px] font-mono text-slate-500 text-center mt-2.5">
-                    Port {item.port} • Active Local Service
+                    {item.port === '5174' ? 'Autonomous 48h Simulation Suite' : item.port === '5173' ? 'Tactical Operations / Admin' : 'FastAPI REST & WebSocket Layer'}
                   </div>
                 </div>
               </div>

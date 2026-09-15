@@ -11,9 +11,13 @@ import {
   AlertTriangle,
   Compass,
   ArrowUpRight,
-  Sparkles
+  Sparkles,
+  LifeBuoy
 } from 'lucide-react'
 import { HERO_DATA } from '../data/landingData.js'
+
+const DEMO_URL = (import.meta.env.VITE_DEMO_URL || 'http://localhost:5174').replace(/\/$/, '')
+const CONSOLE_URL = (import.meta.env.VITE_CONSOLE_URL || 'http://localhost:5173').replace(/\/$/, '')
 
 export default function Hero() {
   const [selectedIncident, setSelectedIncident] = useState(0)
@@ -109,38 +113,41 @@ export default function Hero() {
             {HERO_DATA.subhead}
           </p>
 
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-14">
+          {/* Action Buttons: See Demo & Launch Console */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
             <a
-              href="http://localhost:5174"
+              href={DEMO_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto px-6 py-3.5 rounded-xl text-xs font-bold btn-accent shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer font-sans"
+              className="w-full sm:w-auto px-7 py-3.5 rounded-xl text-xs sm:text-sm font-bold btn-accent shadow-md shadow-sky-500/20 transition-all flex items-center justify-center gap-2.5 cursor-pointer font-sans"
             >
               <Activity className="size-4 text-white" />
-              <span>Launch Judge Sandbox (4-Act Simulation)</span>
-              <ArrowRight className="size-3.5" />
+              <span>See Demo</span>
+              <ArrowRight className="size-4" />
             </a>
 
             <a
-              href="http://localhost:5173"
+              href={CONSOLE_URL.endsWith('/login') || CONSOLE_URL.endsWith('/admin') ? CONSOLE_URL : `${CONSOLE_URL}/login`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto px-6 py-3.5 rounded-xl text-xs font-bold text-slate-800 bg-white border border-slate-200 hover:bg-slate-50 hover:border-slate-300 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+              className="w-full sm:w-auto px-7 py-3.5 rounded-xl text-xs sm:text-sm font-bold text-slate-800 bg-white border border-slate-300 hover:bg-slate-50 hover:border-slate-400 transition-all flex items-center justify-center gap-2.5 cursor-pointer shadow-xs"
             >
-              <Siren className="size-4 text-accent" />
-              <span>Resident Life-Line (PWA)</span>
+              <LifeBuoy className="size-4 text-sky-600" />
+              <span>Launch Console</span>
+              <ArrowUpRight className="size-4 opacity-70" />
             </a>
+          </div>
 
-            <a
-              href="http://localhost:5173/login"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto px-5 py-3.5 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-            >
-              <span>Command Console (/admin)</span>
-              <ArrowUpRight className="size-3.5 opacity-60" />
-            </a>
+          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-slate-500 mb-14">
+            <span className="flex items-center gap-1.5">
+              <span className="size-1.5 rounded-full bg-emerald-500"></span>
+              Interactive 48h Simulation Sandbox
+            </span>
+            <span className="text-slate-300 hidden sm:inline">•</span>
+            <span className="flex items-center gap-1.5">
+              <span className="size-1.5 rounded-full bg-sky-500"></span>
+              Official Command Console & Citizen App
+            </span>
           </div>
 
           {/* 4-Stat Metrics Ribbon */}

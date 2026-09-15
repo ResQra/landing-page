@@ -20,6 +20,8 @@ import {
 } from 'lucide-react'
 import { DUAL_PERSONA } from '../data/landingData.js'
 
+const CONSOLE_URL = (import.meta.env.VITE_CONSOLE_URL || 'http://localhost:5173').replace(/\/$/, '')
+
 export default function DualPersona() {
   const [activeTab, setActiveTab] = useState('resident')
   const [mockApproved, setMockApproved] = useState(false)
@@ -102,12 +104,12 @@ export default function DualPersona() {
 
               <div className="pt-2">
                 <a
-                  href={activeTab === 'resident' ? 'http://localhost:5173' : 'http://localhost:5173/login'}
+                  href={activeTab === 'resident' ? `${CONSOLE_URL}/portal` : (CONSOLE_URL.endsWith('/login') || CONSOLE_URL.endsWith('/admin') ? CONSOLE_URL : `${CONSOLE_URL}/login`)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold btn-accent transition-all font-sans cursor-pointer shadow-sm"
                 >
-                  <span>{activeTab === 'resident' ? 'Launch Resident App (:5173)' : 'Open Control Room (/admin)'}</span>
+                  <span>{activeTab === 'resident' ? 'Launch Resident App' : 'Open Tactical Console (/admin)'}</span>
                   <ArrowRight className="size-3.5" />
                 </a>
               </div>
